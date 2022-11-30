@@ -52,7 +52,7 @@ const { currencyConverter } = require("../controller/currencyToolControler");
 const {
   languageTranslator,
 } = require("../controller/languageTranslatorController");
-const {CssValidate} = require("../controller/CssTools.js")
+const {CssValidate, CssMinifi, CssBeautify} = require("../controller/CssTools.js")
 const { XmlToJson, JsonToYaml, JsonToBase64, Base64ToJson, JsonToText, JsonToCsv, CsvToJson, TsvToJson, JsonToTsv } = require("../controller/JsonTool");
 const { HtmlMinfi } = require("../controller/HtmlTool");
 
@@ -114,7 +114,7 @@ routers.post("/xmltojson", XmlToJson);
 routers.post("/jsontoyaml", JsonToYaml);
 routers.post("/jsontobase64", JsonToBase64);
 routers.post("/base64tojson", Base64ToJson);
-routers.post("/jsontotext", JsonToText);
+routers.post("/jsontotext", JsonToText); 
 routers.post("/jsontocsv", JsonToCsv);
 routers.post("/csvtojson", CsvToJson);
 routers.post("/tsvtojson", TsvToJson);
@@ -123,6 +123,8 @@ routers.post("/jsontotsv", JsonToTsv);
 routers.post("/htmlminifi", HtmlMinfi);
 
 routers.post("/cssvalidator", CssValidate);
+routers.post("/minficss", CssMinifi);
+routers.post("/beautycss", CssBeautify);
 
 
 

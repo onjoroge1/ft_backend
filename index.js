@@ -7,14 +7,12 @@ const multer = require("multer");
 const pdfToExcelGenerator = require("pdf-to-excel");
 const pdf2html = require('pdf2html')
 var bodyParser = require('body-parser')
-//<<<<<<< HEAD
 const dotenv = require('dotenv')
-//=======
 const port = process.env.PORT || 4000;
-//>>>>>>> hamza
-
 
 const allRoutes = require('./routes/route')
+
+
 
 dotenv.config({ path: './config.env' })
 

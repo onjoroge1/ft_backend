@@ -10,8 +10,9 @@ exports.languageTranslator = async (req, res) => {
       to: to,
     });
 
-    console.log(translatedText, "translatedText");
+    console.log("translatedText",translatedText );
     res.status(200).json({ result: translatedText });
+    
     // (async () => {
     //   const translatedText = await translate(
     //     { input },
@@ -25,6 +26,7 @@ exports.languageTranslator = async (req, res) => {
     //   console.log(translatedText); // こんにちは世界
     // })();
   } catch (error) {
+    console.log("error")
     res.status(500).json({ message: "something went wrong", error: error });
   }
 };

@@ -1,7 +1,9 @@
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "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",
+  // apiKey: "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",
+  // apiKey: "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",
+  apiKey: "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",
 });
 
 const openai = new OpenAIApi(configuration);
@@ -13,7 +15,7 @@ exports.textToEmoji = async (req, res, next) => {
     console.log(inputText);
     const completion = await openai.createCompletion({
       model: "text-davinci-002",
-      prompt: `Convert movie titles into emoji.\n\nBack to the Future: 👨👴🚗🕒 \nBatman: 🤵🦇 \nTransformers: 🚗🤖 \n${inputText}:`,
+      prompt: `Convert movie titles into emoji.: 🚗🤖 \n${inputText}:`,
       temperature: 0.8,
       max_tokens: 60,
       top_p: 1.0,
@@ -31,13 +33,13 @@ exports.textToEmoji = async (req, res, next) => {
 
 exports.grammerCorrection = async (req, res, next) => {
   const { inputText } = req.body;
-
+console.log(inputText)
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-002",
-      prompt: `Correct this to standard English:\n\n${inputText}`,
+      prompt: `Correct this to standard English:${inputText}`,
       temperature: 0,
-      max_tokens: 300,
+      max_tokens: 4000,
       top_p: 1.0,
       frequency_penalty: 0.0,
       presence_penalty: 0.0,
@@ -54,7 +56,7 @@ exports.questionAnswer = async (req, res, next) => {
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-002",
-      prompt: `I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with \"Unknown\".\n\nQ: What is human life expectancy in the United States?\nA: Human life expectancy in the United States is 78 years.\n\nQ: Who was president of the United States in 1955?\nA: Dwight D. Eisenhower was president of the United States in 1955.\n\nQ: Which party did he belong to?\nA: He belonged to the Republican Party.\n\nQ: What is the square root of banana?\nA: Unknown\n\nQ: How does a telescope work?\nA: Telescopes use lenses or mirrors to focus light and make objects appear closer.\n\nQ: Where were the 1992 Olympics held?\nA: The 1992 Olympics were held in Barcelona, Spain.\n\nQ: How many squigs are in a bonk?\nA: Unknown\n\nQ: ${inputText}?\nA:`,
+      prompt: `I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with \"Unknown\":\n\nQ: ${inputText}?\nA:`,
       temperature: 0,
       max_tokens: 100,
       top_p: 1,
@@ -314,7 +316,7 @@ exports.explainCode = async (req, res, next) => {
     const { inputText } = req.body;
     const completion = await openai.createCompletion({
       model: "code-davinci-002",
-      prompt: `${inputText}\n\n"""\nHere\'s what the above Code is doing:\n1.`,
+      prompt: `${inputText}\n"""\nHere\'s what the above Code is doing:\n1.`,
       temperature: 0,
       max_tokens: 64,
       top_p: 1.0,
@@ -395,7 +397,7 @@ exports.pythonToNaturalLanguage = async (req, res, next) => {
     const { inputText } = req.body;
     const completion = await openai.createCompletion({
       model: "code-davinci-002",
-      prompt: `# Python 3 \n${inputText}\n\n# Explanation of what the code does\n\n#`,
+      prompt: `# Python 3 \n${inputText}\n\n#`,
       temperature: 0,
       max_tokens: 64,
       top_p: 1.0,
@@ -498,7 +500,7 @@ exports.javascriptToPython = async (req, res, next) => {
     const { inputText } = req.body;
     const completion = await openai.createCompletion({
       model: "code-davinci-002",
-      prompt: `#JavaScript to Python:\n${inputText}\n\nPython:`,
+      prompt: `#JavaScript to Python:\nJavaScript:${inputText}\npython`,
       temperature: 0,
       max_tokens: 64,
       top_p: 1.0,
@@ -828,7 +830,7 @@ exports.vrFitnessIdeaGenerator = async (req, res, next) => {
       model: "text-davinci-002",
       prompt: `Brainstorm some ${inputText} ideas combining VR and fitness:`,
       temperature: 0.6,
-      max_tokens: 150,
+      max_tokens: 300,
       top_p: 1.0,
       frequency_penalty: 1,
       presence_penalty: 1,
@@ -846,7 +848,7 @@ exports.translateProgrammingLanguages = async (req, res, next) => {
     const { inputText } = req.body;
     const completion = await openai.createCompletion({
       model: "code-davinci-002",
-      prompt: `${inputText}`,
+      prompt: inputText,
       temperature: 0,
       max_tokens: 54,
       top_p: 1.0,

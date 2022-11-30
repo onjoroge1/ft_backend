@@ -1,4 +1,5 @@
 var parseString = require('xml2js').parseString;
+const {convertXML, createAST} = require("simple-xml-to-json")
 YAML = require('json2yaml');
 const base64json = require('base64json');
 var convert = require('json-to-plain-text');
@@ -14,11 +15,13 @@ exports.XmlToJson = async (req, res, next) => {
 
 
     try {
-        var xml = bodyData
+        var xml = `<xml>${bodyData}</xml>`;
         parseString(xml, function (err, result) {
             res.status(200).json(result)
         });
-
+        // const myJson = convertXML(req.body.bodyData)
+        // console.log(req.body.bodyData);
+        // res.status(200).json(myJson)
     } catch (err) {
         next(err)
     }
@@ -79,7 +82,7 @@ exports.Base64ToJson = async (req, res, next) => {
 exports.JsonToText = async (req, res, next) => {
 
     const { bodyData } = req.body;
-    console.log(typeof (bodyData));
+    
 
     try {
 
@@ -94,18 +97,37 @@ exports.JsonToText = async (req, res, next) => {
 exports.JsonToCsv = async (req, res, next) => {
 
     const { bodyData } = req.body;
-    const json_data = bodyData;
+
+    console.log(bodyData);
+
     const result = [];
 
-    for (var i in json_data) {
+    for (var i in bodyData) {
+        console.log(i  , bodyData[i] );
 
-        result.push([i, json_data[i]]);
+        // result.push([i, json_data[i]]);
     }
     const opts = result;
 
+    const myCars = [
+        {
+          "car": "Audi",
+          "price": 40000,
+          "color": "blue"
+        }, {
+          "car": "BMW",
+          "price": 35000,
+          "color": "black"
+        }, {
+          "car": "Porsche",
+          "price": 60000,
+          "color": "green"
+        }
+      ];
+
     try {
-        const parser = new Parser(opts);
-        const csv = parser.parse(result);
+        const parser = new Parser();
+        const csv = parser.parse(bodyData);
         res.send(csv);
     }
     catch (err) {
@@ -133,6 +155,7 @@ exports.CsvToJson = async (req, res, next) => {
 exports.TsvToJson = async (req, res, next) => {
 
     const { bodyData } = req.body;
+    console.log(bodyData); 
     try {
 
         res.send(tsv2json(bodyData));
